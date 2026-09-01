@@ -15,6 +15,7 @@
 	<description>E2EE Journal App</description>
 	<properties>
 		<java.version>11</java.version>
+		<sonar.organization>death-collector</sonar.organization>
 	</properties>
 	<dependencies>
 		<dependency>
