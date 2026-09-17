@@ -30,6 +30,5 @@ public class AppCache {
         for(ConfigJournalAppEntity configJournalAppEntity:all){
             appCache.put(configJournalAppEntity.getKey(), configJournalAppEntity.getValue());
         }
-
     }
 }

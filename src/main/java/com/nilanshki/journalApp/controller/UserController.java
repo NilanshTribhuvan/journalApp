@@ -33,6 +33,10 @@ public class UserController {
         User userInDb = userServices.findByUserName(userName);
         userInDb.setUserName(user.getUserName());
         userInDb.setPassword(user.getPassword());
+        if(user.getEmail()!=null && !user.getEmail().isBlank()){
+            userInDb.setEmail(user.getEmail());
+            userInDb.setSentimentAnalysis(true);
+        }
         userServices.saveNewUser(userInDb);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

@@ -24,8 +24,23 @@ public class WeatherService {
     @Autowired
     private AppCache appCache;
 
+    @Autowired
+    private RedisService redisService;
+
     public WeatherResponse getWeather(String city){
-       String finalAPI=appCache.appCache.get(AppCache.keys.WEATHER_API.toString()).replace(Placeholder.CITY,city).replace(Placeholder.API_KEY,apiKey);
+        WeatherResponse weatherResponse = redisService.get("weather_of_" + city, WeatherResponse.class);
+        if(weatherResponse!=null){
+            return weatherResponse;
+        }else{
+            String finalAPI=appCache.appCache.get(AppCache.keys.WEATHER_API.toString()).replace(Placeholder.CITY,city).replace(Placeholder.API_KEY,apiKey);
+            ResponseEntity<WeatherResponse> response = restTemplate.exchange(finalAPI, HttpMethod.GET, null, WeatherResponse.class);
+            WeatherResponse body = response.getBody();
+            if(body!=null){
+                redisService.set("weather_of_" + city,body,300l);
+            }
+            return body;
+        }
+
 //POST
 //        String requestBody="{\n"+
 //        "        \"userName\": \"tn\",\n"+
@@ -33,7 +48,7 @@ public class WeatherService {
 //        "}  ";
 //
 //        HttpEntity<String> httpEntity=new HttpEntity<>(requestBody);
-//      above is a post call and in HttpMethod change .get to .POST and insted of null put httpEntity, this won't work on weather api because it doesn't know what it is.
+//      above is a post call and in HttpMethod change .get to .POST and instead of null put httpEntity, this won't work on weather api because it doesn't know what it is.
 //      if you have another return type then, for Example
         //User user= User.builder().userName("tn").password("tn").build();
         //and put it in place of requestBody...
@@ -43,9 +58,8 @@ public class WeatherService {
 
 
 
-        ResponseEntity<WeatherResponse> response = restTemplate.exchange(finalAPI, HttpMethod.GET, null, WeatherResponse.class);
-        WeatherResponse body = response.getBody();
-        return body;
+
+
     }
 
 }
