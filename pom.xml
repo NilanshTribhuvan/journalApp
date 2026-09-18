@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.16</version>
+		<version>2.7.18</version>
 		<relativePath/>
 	</parent>
 	<groupId>net.engineeringdigest</groupId>
@@ -16,6 +16,7 @@
 	<properties>
 		<java.version>11</java.version>
 		<sonar.organization>death-collector</sonar.organization>
+		<mongodb.version>4.8.2</mongodb.version>
 	</properties>
 	<dependencies>
 		<dependency>
