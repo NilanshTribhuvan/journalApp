@@ -18,6 +18,6 @@ public class RedisTests {
     void test(){
         redisTemplate.opsForValue().set("email","reachnilansh@gmail.com");
         Object email = redisTemplate.opsForValue().get("email");
-          int a=1;
+
     }
 }
